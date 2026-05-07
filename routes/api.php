@@ -9,7 +9,7 @@ Route::get('/', function () {
   return 'Connection Successful.';
 });
 Route::middleware([TokenAuth::class])->group(function () {
-  Route::post('/login', [AuthController::class, 'login']);
   Route::post('/logout', [AuthController::class, 'logout']);
 });
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
