@@ -24,7 +24,7 @@ class AuthController extends Controller
         $user->save();
 
         if (Auth::attempt($credentials)) {
-            // $request->session()->regenerate();
+            session()->regenerate();
             return response()->json([
                 'status' => 'success',
                 'message' => 'ログインが成功しました。',
@@ -33,6 +33,23 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'ログインが失敗しました。',
+            ]);
+        }
+    }
+
+    public function logout(): JsonResponse
+    {
+        if (Auth::logout() == null) {
+            session()->invalidate();
+            session()->regenerateToken();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'ログアウトが成功しました。',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'ログアウトが失敗しました。',
             ]);
         }
     }
