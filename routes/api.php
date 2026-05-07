@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Middleware\TokenAuth;
 use Illuminate\Support\Facades\Route;
 
 // 接続確認用GET
 Route::get('/', function () {
   return 'Connection Successful.';
 });
-Route::post('/login', [AuthController::class, 'login']);
+Route::middleware([TokenAuth::class])->group(function () {
+  Route::post('/login', [AuthController::class, 'login']);
+});
