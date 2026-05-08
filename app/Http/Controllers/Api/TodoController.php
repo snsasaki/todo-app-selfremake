@@ -38,7 +38,7 @@ class TodoController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Successfully created Todo.',
+            'message' => 'Todoを作成しました。',
             'title' => $request->title,
             'body' => $request->body,
             'user_id' => $userId,
@@ -77,7 +77,7 @@ class TodoController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Successfully updated Todo.',
+                'message' => 'Todo情報を更新しました',
                 'title' => $request->title,
                 'body' => $request->body,
                 'is_done' => $request->is_done,
