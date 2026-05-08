@@ -55,6 +55,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'ログインが成功しました。',
+                'api_token' => $user->api_token,
             ]);
         } else {
             return response()->json([
