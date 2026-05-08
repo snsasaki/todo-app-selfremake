@@ -15,4 +15,8 @@ class TodoService
       'is_done' => false,
     ]);
   }
+  public function getTodoList(int $userId)
+  {
+    return Todo::where('user_id', $userId)->get();
+  }
 }

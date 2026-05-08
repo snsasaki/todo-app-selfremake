@@ -18,4 +18,6 @@ Route::post('/register', [AuthController::class, 'register']);
 // Todoの管理
 Route::middleware([TokenAuth::class])->group(function () {
   Route::put('/todo/create', [TodoController::class, 'create']);
+  // Todo 取得
+  Route::get('/todo/list', [TodoController::class, 'list']);
 });

@@ -22,6 +22,7 @@ class TodoController extends Controller
     {
 
         // TODO: Refactorできそう
+        // TODO: Tokenからidを抽出する処理を汎用化する
         $token = $request->header('X-API-TOKEN');
 
         $request->validate([
@@ -42,5 +43,16 @@ class TodoController extends Controller
             'body' => $request->body,
             'user_id' => $userId,
         ]);
+    }
+
+    public function list(Request $request): JsonResponse
+    {
+        $token = $request->header('X-API-TOKEN');
+
+        $userId = User::where('api_token', $token)->first()->id;
+
+        $list = $this->todoService->getTodoList($userId);
+
+        return response()->json([$list]);
     }
 }
