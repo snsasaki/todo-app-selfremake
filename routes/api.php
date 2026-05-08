@@ -20,4 +20,6 @@ Route::middleware([TokenAuth::class])->group(function () {
   Route::put('/todo/create', [TodoController::class, 'create']);
   // Todo 取得
   Route::get('/todo/list', [TodoController::class, 'list']);
+  // Todo 更新
+  Route::put('/todo/update', [TodoController::class, 'update']);
 });

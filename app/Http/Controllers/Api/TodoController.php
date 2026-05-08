@@ -55,4 +55,26 @@ class TodoController extends Controller
 
         return response()->json([$list]);
     }
+    public function update(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'id' => 'required',
+            'title' => 'required',
+            'body' => 'nullable',
+            'is_done' => 'nullable',
+            'boolean',
+            'user_id' => 'required',
+        ]);
+
+        $this->todoService->update($validated);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully updated Todo.',
+            'title' => $request->title,
+            'body' => $request->body,
+            'is_done' => $request->is_done,
+            'user_id' => $request->user_id,
+        ]);
+    }
 }

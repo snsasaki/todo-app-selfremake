@@ -19,4 +19,15 @@ class TodoService
   {
     return Todo::where('user_id', $userId)->get();
   }
+  public function update(array $data)
+  {
+    $todo = Todo::where('id', $data['id']);
+    $todo->update([
+      'title' => $data['title'],
+      'body' => $data['body'] ?? null,
+      'is_done' => $data['is_done'],
+    ]);
+
+    return $todo;
+  }
 }
