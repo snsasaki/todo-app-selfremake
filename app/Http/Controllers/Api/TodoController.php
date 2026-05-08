@@ -57,6 +57,11 @@ class TodoController extends Controller
     }
     public function update(Request $request): JsonResponse
     {
+
+        $token = $request->header('X-API-TOKEN');
+
+        $userId = User::where('api_token', $token)->first()->id;
+
         $validated = $request->validate([
             'id' => 'required',
             'title' => 'required',
@@ -66,15 +71,23 @@ class TodoController extends Controller
             'user_id' => 'required',
         ]);
 
-        $this->todoService->update($validated);
+        if ($validated['user_id'] == $userId) {
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Successfully updated Todo.',
-            'title' => $request->title,
-            'body' => $request->body,
-            'is_done' => $request->is_done,
-            'user_id' => $request->user_id,
-        ]);
+            $this->todoService->update($validated);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Successfully updated Todo.',
+                'title' => $request->title,
+                'body' => $request->body,
+                'is_done' => $request->is_done,
+                'user_id' => $request->user_id,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => ' 権限がありません。',
+            ], 403);
+        }
     }
 }
